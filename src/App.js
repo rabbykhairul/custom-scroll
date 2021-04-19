@@ -1,9 +1,9 @@
-import logo from './logo.svg';
 import './App.css';
+import HorizontalDiv from "./components/HorizontalDiv";
 
 function App() {
   return (
-    <h1>Hello World</h1>
+    <HorizontalDiv />
   );
 }
 

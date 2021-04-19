@@ -17,3 +17,65 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.horizontal-div {
+  width: fit-content;
+  height: 75vh;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.child-item {
+  width: 100vw;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25vw;
+}
+
+.bg-e63946 {
+  background-color: #e63946;
+  color: #fff;
+}
+
+.bg-f1faee {
+  background-color: #f1faee;
+  color: #232323;
+}
+
+.bg-a8dadc {
+  background-color: #a8dadc;
+  color: #232323;
+}
+
+.bg-457b9d {
+  background-color: #457b9d;
+  color: #fff;
+}
+
+.bg-1d3557 {
+  background-color: #1d3557;
+  color: #fff;
+}
+
+.bg-d00000 {
+  background-color: #d00000;
+  color: #fff;
+}
+
+.bg-03071e {
+  background-color: #03071e;
+  color: #fff;
+}
+
+.bg-ffba08 {
+  background-color: #ffba08;
+  color: #232323;
+}
+
+.bg-f8f9fa {
+  background-color: #f8f9fa;
+  color: #232323;
+}
