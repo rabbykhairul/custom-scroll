@@ -3,7 +3,7 @@ import QuickPinchZoom, { make3dTransformValue } from "./customPinchZoom/index";
 
 const HorizontalDiv = (props) => {
 
-  const { onScroll } = props;
+  const { onScroll, onTouchRelease } = props;
 
   const [annotationRefs, setAnnotationsRefs] = useState([]);
   if (annotationRefs.length === 0) {
@@ -40,6 +40,16 @@ const HorizontalDiv = (props) => {
     setTouchStartX(touch.clientX);
   }
 
+  const handleTouchEnd = (e) => {
+    const touch = e.changedTouches[0];
+    const touchTraveledXDirection = touchStartX - touch.clientX;
+    const touchMoveDirection = touchTraveledXDirection > 0 ? 1 : touchTraveledXDirection < 0 ? -1 : 0;
+    const shouldScroll = currentZoomScale === 1 && touchMoveDirection !== 0;
+
+    if (shouldScroll)
+      onTouchRelease(touchMoveDirection)
+  }
+
   const onZoomChange = ({ scale, x, y }, refIdx) => {
     const { current: div } = annotationRefs[refIdx];
     setCurrentZoomScale(scale);
@@ -51,7 +61,7 @@ const HorizontalDiv = (props) => {
   }
 
   return (
-    <div className="horizontal-div" onTouchStart={onTouchStart} onTouchMove={handleTouchMove}>
+    <div className="horizontal-div" onTouchStart={onTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd} >
       <QuickPinchZoom onUpdate={(update) => onZoomChange(update, 0)} tapZoomFactor={0} draggableUnZoomed={false}>
         <div className="child-item bg-e63946" ref={annotationRefs[0]}>1</div>
       </QuickPinchZoom>
