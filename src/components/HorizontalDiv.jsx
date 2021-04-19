@@ -1,9 +1,28 @@
-import React from "react";
+import React, { useRef } from "react";
+import QuickPinchZoom, { make3dTransformValue } from "./customPinchZoom/index";
 
 const HorizontalDiv = (props) => {
+
+  const annotationRef = useRef();
+
+  const handleTouchMove = (e) => {
+    
+  }
+
+  const onZoomChange = ({ scale, x, y }) => {
+    const { current: div } = annotationRef;
+
+    if (div) {
+      const value = make3dTransformValue({ x, y, scale});
+      div.style.setProperty("transform", value);
+    }
+  }
+
   return (
-    <div className="horizontal-div" onTouchMove={() => console.log("===\ntouch move\n===\n")}>
-      <div className="child-item bg-e63946">1</div>
+    <div className="horizontal-div" onTouchMove={handleTouchMove}>
+      <QuickPinchZoom onUpdate={onZoomChange} tapZoomFactor={0} draggableUnZoomed={false}>
+        <div className="child-item bg-e63946" ref={annotationRef}>1</div>
+      </QuickPinchZoom>
       <div className="child-item bg-f1faee">2</div>
       <div className="child-item bg-a8dadc">3</div>
       <div className="child-item bg-457b9d">4</div>
