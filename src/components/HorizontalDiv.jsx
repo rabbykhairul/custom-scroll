@@ -1,11 +1,18 @@
-import React, { useState, useRef } from "react";
+import React, { useState, createRef } from "react";
 import QuickPinchZoom, { make3dTransformValue } from "./customPinchZoom/index";
 
 const HorizontalDiv = (props) => {
 
   const { onScroll } = props;
 
-  const annotationRef = useRef();
+  const [annotationRefs, setAnnotationsRefs] = useState([]);
+  if (annotationRefs.length === 0) {
+    let refs = [];
+    for (let i = 0; i < 9; i++) {
+      refs.push(createRef());
+    }
+    setAnnotationsRefs(refs);
+  }
 
   const [ touchStartX, setTouchStartX ] = useState(0);
   const [ currentZoomScale, setCurrentZoomScale ] = useState(1);
@@ -33,8 +40,8 @@ const HorizontalDiv = (props) => {
     setTouchStartX(touch.clientX);
   }
 
-  const onZoomChange = ({ scale, x, y }) => {
-    const { current: div } = annotationRef;
+  const onZoomChange = ({ scale, x, y }, refIdx) => {
+    const { current: div } = annotationRefs[refIdx];
     setCurrentZoomScale(scale);
 
     if (div) {
@@ -45,32 +52,32 @@ const HorizontalDiv = (props) => {
 
   return (
     <div className="horizontal-div" onTouchStart={onTouchStart} onTouchMove={handleTouchMove}>
-      <QuickPinchZoom onUpdate={onZoomChange} tapZoomFactor={0} draggableUnZoomed={false}>
-        <div className="child-item bg-e63946" ref={annotationRef}>1</div>
+      <QuickPinchZoom onUpdate={(update) => onZoomChange(update, 0)} tapZoomFactor={0} draggableUnZoomed={false}>
+        <div className="child-item bg-e63946" ref={annotationRefs[0]}>1</div>
       </QuickPinchZoom>
-      <QuickPinchZoom onUpdate={onZoomChange} tapZoomFactor={0} draggableUnZoomed={false}>
-        <div className="child-item bg-f1faee">2</div>
+      <QuickPinchZoom onUpdate={(update) => onZoomChange(update, 1)} tapZoomFactor={0} draggableUnZoomed={false}>
+        <div className="child-item bg-f1faee" ref={annotationRefs[1]}>2</div>
       </QuickPinchZoom>
-      <QuickPinchZoom onUpdate={onZoomChange} tapZoomFactor={0} draggableUnZoomed={false}>
-        <div className="child-item bg-a8dadc">3</div>
+      <QuickPinchZoom onUpdate={(update) => onZoomChange(update, 2)} tapZoomFactor={0} draggableUnZoomed={false}>
+        <div className="child-item bg-a8dadc" ref={annotationRefs[2]}>3</div>
       </QuickPinchZoom>
-      <QuickPinchZoom onUpdate={onZoomChange} tapZoomFactor={0} draggableUnZoomed={false}>
-        <div className="child-item bg-457b9d">4</div>
+      <QuickPinchZoom onUpdate={(update) => onZoomChange(update, 3)} tapZoomFactor={0} draggableUnZoomed={false}>
+        <div className="child-item bg-457b9d" ref={annotationRefs[3]}>4</div>
       </QuickPinchZoom>
-      <QuickPinchZoom onUpdate={onZoomChange} tapZoomFactor={0} draggableUnZoomed={false}>
-        <div className="child-item bg-1d3557">5</div>
+      <QuickPinchZoom onUpdate={(update) => onZoomChange(update, 4)} tapZoomFactor={0} draggableUnZoomed={false}>
+        <div className="child-item bg-1d3557" ref={annotationRefs[4]}>5</div>
       </QuickPinchZoom>
-      <QuickPinchZoom onUpdate={onZoomChange} tapZoomFactor={0} draggableUnZoomed={false}>
-        <div className="child-item bg-d00000">6</div>
+      <QuickPinchZoom onUpdate={(update) => onZoomChange(update, 5)} tapZoomFactor={0} draggableUnZoomed={false}>
+        <div className="child-item bg-d00000" ref={annotationRefs[5]}>6</div>
       </QuickPinchZoom>
-      <QuickPinchZoom onUpdate={onZoomChange} tapZoomFactor={0} draggableUnZoomed={false}>
-        <div className="child-item bg-03071e">7</div>
+      <QuickPinchZoom onUpdate={(update) => onZoomChange(update, 6)} tapZoomFactor={0} draggableUnZoomed={false}>
+        <div className="child-item bg-03071e" ref={annotationRefs[6]}>7</div>
       </QuickPinchZoom>
-      <QuickPinchZoom onUpdate={onZoomChange} tapZoomFactor={0} draggableUnZoomed={false}>
-        <div className="child-item bg-ffba08">8</div>
+      <QuickPinchZoom onUpdate={(update) => onZoomChange(update, 7)} tapZoomFactor={0} draggableUnZoomed={false}>
+        <div className="child-item bg-ffba08" ref={annotationRefs[7]}>8</div>
       </QuickPinchZoom>
-      <QuickPinchZoom onUpdate={onZoomChange} tapZoomFactor={0} draggableUnZoomed={false}>
-        <div className="child-item bg-f8f9fa">9</div>
+      <QuickPinchZoom onUpdate={(update) => onZoomChange(update, 8)} tapZoomFactor={0} draggableUnZoomed={false}>
+        <div className="child-item bg-f8f9fa" ref={annotationRefs[8]}>9</div>
       </QuickPinchZoom>
     </div>
   );
