@@ -9,6 +9,21 @@ function easeOutQuad(x) {
   return 1 - (1 - x) * (1 - x);
 }
 
+const getAdjustedTargetScrollPositionX = (element, scrollDirection, distanceToTravel) => {
+    const currentScrollPositionX = element.scrollLeft;
+    const maxScrollX = element.scrollWidth - window.innerWidth;
+    const minScrollX = 0;
+
+    let targetScrollPosition = currentScrollPositionX;
+    if (scrollDirection === 1) {
+      targetScrollPosition = currentScrollPositionX + distanceToTravel > maxScrollX ? maxScrollX : currentScrollPositionX + distanceToTravel;
+    } else if (scrollDirection === -1) {
+      targetScrollPosition = currentScrollPositionX - distanceToTravel < minScrollX ? minScrollX : currentScrollPositionX - distanceToTravel;
+    }
+
+    return targetScrollPosition;
+  }
+
 const animateScrollLeft = ({ element, startScrollLeft, delta, duration }) => {
   startTime = Date.now();
 
@@ -39,22 +54,7 @@ function App() {
       scrollDirection === 1 ? currentScrollPositionX + targetScrollAmount : currentScrollPositionX - targetScrollAmount;
   }
 
-  const getAdjustedTargetScrollPositionX = (element, scrollDirection, distanceToTravel) => {
-    const currentScrollPositionX = element.scrollLeft;
-    const maxScrollX = element.scrollWidth - window.innerWidth;
-    const minScrollX = 0;
-
-    let targetScrollPosition = currentScrollPositionX;
-    if (scrollDirection === 1) {
-      targetScrollPosition = currentScrollPositionX + distanceToTravel > maxScrollX ? maxScrollX : currentScrollPositionX + distanceToTravel;
-    } else if (scrollDirection === -1) {
-      targetScrollPosition = currentScrollPositionX - distanceToTravel < minScrollX ? minScrollX : currentScrollPositionX - distanceToTravel;
-    }
-
-    return targetScrollPosition;
-  }
-
-  const autoScroll = (scrollDirection) => {
+  const autoScroll = (distanceTraveledX, scrollDirection, elapsedTime) => {
     const container = containerRef.current;
     const currentScrollPositionX = container.scrollLeft;
     const targetScrollPositionX = getAdjustedTargetScrollPositionX(container, scrollDirection, 1750);
