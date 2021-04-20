@@ -15,6 +15,7 @@ const HorizontalDiv = (props) => {
   }
 
   const [ touchStartX, setTouchStartX ] = useState(0);
+  const [ touchStartTimeInMsec, setTouchStartTimeInMsec ] = useState(Date.now());
   const [ prevTouchX, setPrevTouchX ] = useState(0);
   const [ currentZoomScale, setCurrentZoomScale ] = useState(1);
 
@@ -28,6 +29,7 @@ const HorizontalDiv = (props) => {
 
     setTouchStartX(touch.clientX);
     setPrevTouchX(touch.clientX);
+    setTouchStartTimeInMsec(Date.now());
   }
 
   const handleTouchMove = (e) => {
@@ -43,9 +45,10 @@ const HorizontalDiv = (props) => {
   }
 
   const handleTouchEnd = (e) => {
+    const elapsedTimeBetweenTouchStartAndEnd = Date.now() - touchStartTimeInMsec;
     const touch = e.changedTouches[0];
-    const touchTraveledXDirection = touchStartX - touch.clientX;
-    const touchMoveDirection = touchTraveledXDirection > 0 ? 1 : touchTraveledXDirection < 0 ? -1 : 0;
+    const touchTraveledDistanceX = touchStartX - touch.clientX;
+    const touchMoveDirection = touchTraveledDistanceX > 0 ? 1 : touchTraveledDistanceX < 0 ? -1 : 0;
     const shouldScroll = currentZoomScale === 1 && touchMoveDirection !== 0;
 
     if (shouldScroll)
