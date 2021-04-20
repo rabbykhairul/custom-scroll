@@ -49,7 +49,7 @@ const getTargetScrollAmount = (
   distanceTraveledXBetweenTouchStartAndEnd, 
   elapsedTimeBetweenTouchStartAndEnd
 ) => {
-  const pxFactor = 550;
+  const pxFactor = 650;
   const pxTraveledPerMsec = 
     Math.abs(distanceTraveledXBetweenTouchStartAndEnd) / elapsedTimeBetweenTouchStartAndEnd;
 
@@ -66,7 +66,7 @@ const performAutomaticScrollWithAnimationInXDirection = ({
   scrollDirection,
   elapsedTimeBetweenTouchStartAndEnd
 }) => {
-  const pxToTravelPerMsec = 1.15;
+  const pxToTravelPerMsec = 1.25;
   const currentScrollPositionX = element.scrollLeft;
   const targetScrollAmount = getTargetScrollAmount(
     distanceTraveledXBetweenTouchStartAndEnd,
