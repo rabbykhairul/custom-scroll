@@ -44,6 +44,21 @@ const animateScrollLeft = ({ element, startScrollLeft, delta, duration }) => {
   requestAnimationFrame(animationStep);
 }
 
+const getTargetScrollAmount = (
+  distanceTraveledXBetweenTouchStartAndEnd, 
+  elapsedTimeBetweenTouchStartAndEnd
+) => {
+  const pxFactor = 550;
+  const pxTraveledPerMsec = 
+    Math.abs(distanceTraveledXBetweenTouchStartAndEnd) / elapsedTimeBetweenTouchStartAndEnd;
+
+  console.log("\n===");
+  console.log("pxPerMsec: ", pxTraveledPerMsec);
+  console.log("===\n");
+
+  return pxTraveledPerMsec < 0.25 ? 0 : pxTraveledPerMsec * pxFactor;
+}
+
 const performAutomaticScrollWithAnimationInXDirection = ({
   element,
   distanceTraveledXBetweenTouchStartAndEnd,
