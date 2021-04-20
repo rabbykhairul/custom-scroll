@@ -44,6 +44,24 @@ const animateScrollLeft = ({ element, startScrollLeft, delta, duration }) => {
   requestAnimationFrame(animationStep);
 }
 
+const performAutomaticScrollWithAnimationInXDirection = ({
+  element,
+  distanceTraveledXBetweenTouchStartAndEnd,
+  scrollDirection,
+  elapsedTimeBetweenTouchStartAndEnd
+}) => {
+  const currentScrollPositionX = element.scrollLeft;
+  const targetScrollPositionX = getAdjustedTargetScrollPositionX(element, scrollDirection, 1750);
+  const delta = targetScrollPositionX - currentScrollPositionX;
+
+  animateScrollLeft({
+    element,
+    startScrollLeft: currentScrollPositionX,
+    delta,
+    duration: 2500
+  });
+}
+
 function App() {
   const containerRef = useRef();
 
@@ -56,22 +74,30 @@ function App() {
 
   const autoScroll = (distanceTraveledX, scrollDirection, elapsedTime) => {
     const container = containerRef.current;
-    const currentScrollPositionX = container.scrollLeft;
-    const targetScrollPositionX = getAdjustedTargetScrollPositionX(container, scrollDirection, 1750);
-    const delta = targetScrollPositionX - currentScrollPositionX;
 
-    console.log("\n===");
-    console.log("currentScrollPositionX: ", currentScrollPositionX);
-    console.log("targetScrollPositionX: ", targetScrollPositionX);
-    console.log("delta: ", delta);
-    console.log("===\n");
-    
-    animateScrollLeft({
+    performAutomaticScrollWithAnimationInXDirection({
       element: container,
-      startScrollLeft: currentScrollPositionX,
-      delta,
-      duration: 2500
-    });
+      distanceTraveledXBetweenTouchStartAndEnd: distanceTraveledX,
+      scrollDirection,
+      elapsedTimeBetweenTouchStartAndEnd: elapsedTime,
+    })
+
+    // const currentScrollPositionX = container.scrollLeft;
+    // const targetScrollPositionX = getAdjustedTargetScrollPositionX(container, scrollDirection, 1750);
+    // const delta = targetScrollPositionX - currentScrollPositionX;
+
+    // console.log("\n===");
+    // console.log("currentScrollPositionX: ", currentScrollPositionX);
+    // console.log("targetScrollPositionX: ", targetScrollPositionX);
+    // console.log("delta: ", delta);
+    // console.log("===\n");
+    
+    // animateScrollLeft({
+    //   element: container,
+    //   startScrollLeft: currentScrollPositionX,
+    //   delta,
+    //   duration: 2500
+    // });
   }
 
   return (
