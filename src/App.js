@@ -65,15 +65,29 @@ const performAutomaticScrollWithAnimationInXDirection = ({
   scrollDirection,
   elapsedTimeBetweenTouchStartAndEnd
 }) => {
+  const pxToTravelPerMsec = 1.15;
   const currentScrollPositionX = element.scrollLeft;
-  const targetScrollPositionX = getAdjustedTargetScrollPositionX(element, scrollDirection, 1750);
+  const targetScrollAmount = getTargetScrollAmount(
+    distanceTraveledXBetweenTouchStartAndEnd,
+    elapsedTimeBetweenTouchStartAndEnd
+  );
+  const targetScrollPositionX = getAdjustedTargetScrollPositionX(element, scrollDirection, targetScrollAmount);
   const delta = targetScrollPositionX - currentScrollPositionX;
+  const scrollDurantion = delta * pxToTravelPerMsec;
+
+  console.log("\n===");
+  console.log("currentScrollPosition: ", currentScrollPositionX);
+  console.log("targetScrollAmount: ", targetScrollAmount);
+  console.log("targetScrollPosition: ", targetScrollPositionX);
+  console.log("delta: ", delta);
+  console.log("scroll duration: ", scrollDurantion);
+  console.log("===\n");
 
   animateScrollLeft({
     element,
     startScrollLeft: currentScrollPositionX,
     delta,
-    duration: 2500
+    duration: scrollDurantion
   });
 }
 
