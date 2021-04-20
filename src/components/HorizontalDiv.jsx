@@ -51,8 +51,13 @@ const HorizontalDiv = (props) => {
     const touchMoveDirection = touchTraveledDistanceX > 0 ? 1 : touchTraveledDistanceX < 0 ? -1 : 0;
     const shouldScroll = currentZoomScale === 1 && touchMoveDirection !== 0;
 
+    console.log("\n===");
+    console.log("distanceX: ", touchTraveledDistanceX);
+    console.log("elapsedTime: ", elapsedTimeBetweenTouchStartAndEnd);
+    console.log("===\n");
+
     if (shouldScroll)
-      onTouchRelease(touchMoveDirection)
+      onTouchRelease(touchTraveledDistanceX, touchMoveDirection, elapsedTimeBetweenTouchStartAndEnd);
   }
 
   const onZoomChange = ({ scale, x, y }, refIdx) => {
