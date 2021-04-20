@@ -41,7 +41,8 @@ const animateScrollLeft = ({ element, startScrollLeft, delta, duration }) => {
       requestAnimationFrame(animationStep);
   }
 
-  requestAnimationFrame(animationStep);
+  if (duration > 0)
+    requestAnimationFrame(animationStep);
 }
 
 const getTargetScrollAmount = (
