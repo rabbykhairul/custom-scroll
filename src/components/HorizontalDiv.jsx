@@ -3,7 +3,7 @@ import QuickPinchZoom, { make3dTransformValue } from "./customPinchZoom/index";
 
 const HorizontalDiv = (props) => {
 
-  const { onScroll, onTouchRelease } = props;
+  const { onScroll, onTouchRelease, onTap } = props;
 
   const [annotationRefs, setAnnotationsRefs] = useState([]);
   if (annotationRefs.length === 0) {
@@ -30,6 +30,8 @@ const HorizontalDiv = (props) => {
     setTouchStartX(touch.clientX);
     setPrevTouchX(touch.clientX);
     setTouchStartTimeInMsec(Date.now());
+
+    onTap();
   }
 
   const handleTouchMove = (e) => {

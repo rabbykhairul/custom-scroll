@@ -105,6 +105,15 @@ const performAutomaticScrollWithAnimationInXDirection = ({
   });
 }
 
+const stopAutomaticScrolling = () => {
+  if (isAnimationRunning) {
+    setTimeout(() => {
+      cancelAnimationFrame(lastRequestedAnimationFrameId);
+      isAnimationRunning = false;
+    }, 50);
+  }
+}
+
 function App() {
   const containerRef = useRef();
 
@@ -143,9 +152,13 @@ function App() {
     // });
   }
 
+  const stopScroll = () => {
+    stopAutomaticScrolling();
+  }
+
   return (
     <div ref={containerRef} style={{ width: "100vw", overflow: "scroll" }} className="main-div">
-      <HorizontalDiv onScroll={onScroll} onTouchRelease={autoScroll} />
+      <HorizontalDiv onScroll={onScroll} onTouchRelease={autoScroll} onTap={stopScroll} />
     </div>
   );
 }
