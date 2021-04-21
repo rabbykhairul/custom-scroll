@@ -79,7 +79,7 @@ const performAutomaticScrollWithAnimationInXDirection = ({
     elapsedTimeBetweenTouchStartAndEnd
   );
   const targetScrollPositionX = getAdjustedTargetScrollPositionX(element, scrollDirection, targetScrollAmount);
-  const delta = targetScrollPositionX - currentScrollPositionX;
+  const delta = Math.abs(targetScrollPositionX - currentScrollPositionX) < 0.5 ? 0 : targetScrollPositionX - currentScrollPositionX;
   const scrollDurantion = Math.abs(delta) * pxToTravelPerMsec;
 
   console.log("\n===");
