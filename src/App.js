@@ -110,7 +110,7 @@ const stopAutomaticScrolling = () => {
     setTimeout(() => {
       cancelAnimationFrame(lastRequestedAnimationFrameId);
       isAnimationRunning = false;
-    }, 50);
+    }, 20);
   }
 }
 
