@@ -10,6 +10,11 @@ function easeOutQuad(x) {
   return 1 - (1 - x) * (1 - x);
 }
 
+function easeOutExpo(x) {
+  return x === 1 ? 1 : 1 - Math.pow(2, -10 * x);
+}
+
+
 const getAdjustedTargetScrollPositionX = (element, scrollDirection, distanceToTravel) => {
   const currentScrollPositionX = element.scrollLeft;
   const maxScrollX = element.scrollWidth - window.innerWidth;
@@ -39,7 +44,7 @@ const animateScrollLeft = ({ element, startScrollLeft, delta, duration }) => {
   const animationStep = (timeStamp) => {
     elapsedTime = Date.now() - startTime;
     let progressPercentage = (100 / duration) * elapsedTime;
-    let factor = easeOutQuad(progressPercentage / 100);
+    let factor = easeOutExpo(progressPercentage / 100);
 
     element.scrollLeft = startScrollLeft + (delta * factor);
 
@@ -55,7 +60,7 @@ const getTargetScrollAmount = (
   distanceTraveledXBetweenTouchStartAndEnd, 
   elapsedTimeBetweenTouchStartAndEnd
 ) => {
-  const pxFactor = 850;
+  const pxFactor = 950;
   const pxTraveledPerMsec = 
     Math.abs(distanceTraveledXBetweenTouchStartAndEnd) / elapsedTimeBetweenTouchStartAndEnd;
 
@@ -80,7 +85,7 @@ const performAutomaticScrollWithAnimationInXDirection = ({
   );
   const targetScrollPositionX = getAdjustedTargetScrollPositionX(element, scrollDirection, targetScrollAmount);
   const delta = Math.abs(targetScrollPositionX - currentScrollPositionX) < 0.5 ? 0 : targetScrollPositionX - currentScrollPositionX;
-  const scrollDurantion = Math.abs(delta) * pxToTravelPerMsec;
+  const scrollDurantion = Math.abs(delta) < 35 ? Math.abs(delta) * pxToTravelPerMsec : Math.abs(delta) / pxToTravelPerMsec;
 
   console.log("\n===");
   console.log("currentScrollPosition: ", currentScrollPositionX);
