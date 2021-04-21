@@ -6,12 +6,8 @@ let startTime;
 let elapsedTime;
 let lastRequestedAnimationFrameId;
 
-// function easeOutQuad(x) {
-//   return 1 - (1 - x) * (1 - x);
-// }
-
-function easeOutExpo(x) {
-  return x === 1 ? 1 : 1 - Math.pow(2, -10 * x);
+function easeOutQuad(x) {
+  return 1 - (1 - x) * (1 - x);
 }
 
 
@@ -44,7 +40,7 @@ const animateScrollLeft = ({ element, startScrollLeft, delta, duration }) => {
   const animationStep = (timeStamp) => {
     elapsedTime = Date.now() - startTime;
     let progressPercentage = (100 / duration) * elapsedTime;
-    let factor = easeOutExpo(progressPercentage / 100);
+    let factor = easeOutQuad(progressPercentage / 100);
 
     element.scrollLeft = startScrollLeft + (delta * factor);
 
@@ -85,7 +81,7 @@ const performAutomaticScrollWithAnimationInXDirection = ({
   );
   const targetScrollPositionX = getAdjustedTargetScrollPositionX(element, scrollDirection, targetScrollAmount);
   const delta = Math.abs(targetScrollPositionX - currentScrollPositionX) < 0.5 ? 0 : targetScrollPositionX - currentScrollPositionX;
-  const scrollDurantion = Math.abs(delta) < 35 ? Math.abs(delta) * pxToTravelPerMsec : Math.abs(delta) / pxToTravelPerMsec;
+  const scrollDurantion = Math.abs(delta) * pxToTravelPerMsec;
 
   console.log("\n===");
   console.log("currentScrollPosition: ", currentScrollPositionX);
