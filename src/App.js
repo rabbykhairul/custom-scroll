@@ -4,6 +4,7 @@ import HorizontalDiv from "./components/HorizontalDiv";
 
 let startTime;
 let elapsedTime;
+let lastRequestedAnimationFrameId;
 
 function easeOutQuad(x) {
   return 1 - (1 - x) * (1 - x);
@@ -27,6 +28,11 @@ const getAdjustedTargetScrollPositionX = (element, scrollDirection, distanceToTr
 const animateScrollLeft = ({ element, startScrollLeft, delta, duration }) => {
   startTime = Date.now();
 
+  // cancel animation frames that were requested before this call to animation
+  const cancelAnimationFrame = window.cancelAnimationFrame || window.mozCancelAnimationFrame;
+  if (lastRequestedAnimationFrameId)
+    cancelAnimationFrame(lastRequestedAnimationFrameId);
+
   const requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
                                 window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 
@@ -38,11 +44,11 @@ const animateScrollLeft = ({ element, startScrollLeft, delta, duration }) => {
     element.scrollLeft = startScrollLeft + (delta * factor);
 
     if (elapsedTime < duration)
-      requestAnimationFrame(animationStep);
+      lastRequestedAnimationFrameId = requestAnimationFrame(animationStep);
   }
 
   if (duration > 0)
-    requestAnimationFrame(animationStep);
+    lastRequestedAnimationFrameId = requestAnimationFrame(animationStep);
 }
 
 const getTargetScrollAmount = (
