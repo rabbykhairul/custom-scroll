@@ -79,7 +79,7 @@ const performAutomaticScrollWithAnimationInXDirection = ({
   scrollDirection,
   elapsedTimeBetweenTouchStartAndEnd
 }) => {
-  const pxToTravelPerMsec = 1.4;
+  const pxToTravelPerMsec = 1.25;
   const currentScrollPositionX = element.scrollLeft;
   const targetScrollAmount = getTargetScrollAmount(
     distanceTraveledXBetweenTouchStartAndEnd,
@@ -107,10 +107,8 @@ const performAutomaticScrollWithAnimationInXDirection = ({
 
 const stopAutomaticScrolling = () => {
   if (isAnimationRunning) {
-    setTimeout(() => {
-      cancelAnimationFrame(lastRequestedAnimationFrameId);
-      isAnimationRunning = false;
-    }, 10);
+    cancelAnimationFrame(lastRequestedAnimationFrameId);
+    isAnimationRunning = false;
   }
 }
 
