@@ -6,9 +6,9 @@ let startTime;
 let elapsedTime;
 let lastRequestedAnimationFrameId;
 
-function easeOutQuad(x) {
-  return 1 - (1 - x) * (1 - x);
-}
+// function easeOutQuad(x) {
+//   return 1 - (1 - x) * (1 - x);
+// }
 
 function easeOutExpo(x) {
   return x === 1 ? 1 : 1 - Math.pow(2, -10 * x);
